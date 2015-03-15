@@ -1,0 +1,90 @@
+<?php
+function test_help($path, $arg) {
+  $output = '';
+  switch($path) {
+    case "admin/help#test":
+      $output = '<p>'.t('Some text in test_help function').'<p>';
+      break;
+  }
+  return $output;
+}
+
+function test_perm() {
+  return array('access test content');
+}
+
+function test_block($op = 'list', $delta = 0, $edit = array()) {
+  $block = array();
+  
+  switch($op) {
+    case 'list':
+      $block[0]["info"] = t('Teeeest');
+      break;
+    case 'view':
+      $block_content = "";
+      $today = getdate();
+      $start_time = mktime(0, 0, 0, $today['mon'], $today['mday'] - 7, $today['year']);
+      $end_time = $start_time + 60*60*24;
+
+      $limit = variable_get('test_maxdisp', 3);
+      $query = "SELECT nid, title, created FROM {node} WHERE created >= '%d' AND created <= '%d'";
+      $query_result = db_query_range($query, $start_time, $end_time, 0, $limit);
+      while($links = db_fetch_object($query_result)) {
+        $block_content .= l($links->title, "node/".$links->nid);
+        $block_content .= "<br/>";
+      }
+
+      $block["subject"] = t('Teest module subject');
+      if($block_content == "") {
+        $block_content = t('Empty Content');
+      }
+      $block["content"] = $block_content;
+      break;
+    case 'save':
+      break;
+    case 'configure':
+      break;
+  }
+  return $block;
+}
+
+function test_settings() {
+  $form = array();
+
+  $form['test_maxdisp'] = array(
+    '#type' => 'textfield',
+      '#title' => t('Maximum number of links'),
+      '#default_value' => variable_get('test_maxdisp', 3),
+      '#size' => 2,
+      '#maxlength' => 2,
+      '#description' => t('The maximum number of links to display in the block'),
+      '#required' => TRUE
+  );
+
+  return system_settings_form($form);
+}
+
+function test_settings_validate($form, &$form_state) {
+  $maxdisp = $form_state['values']['test_maxdisp'];
+  if (!is_numeric($maxdisp)) {
+    form_set_error('test_maxdisp', t('wtf, it should be integer'));
+  }
+  elseif ($maxdisp <= 0) {
+    form_set_error('test_maxdisp', t('it should be positive :)'));
+  }
+}
+
+function test_menu() {
+  $items = array();
+
+  $items['admin/settings/test'] = array(
+    'title' => 'Test module settings',
+      'description' => 'Description of your Test settings page',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('test_settings'),
+      'access arguments' => array('administer test settings'),
+      'type' => MENU_NORMAL_ITEM
+  );
+
+  return $items;
+}
