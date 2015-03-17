@@ -11,7 +11,13 @@ function cv_maker_menu() {
     'title' => 'Homepage',
     'description' => 'Home page',
     'page callback' => 'get_homepage',
-    'page arguments' => array(''),
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM
+  );
+  $items['new-cv'] = array(
+    'title' => 'New CV',
+    'description' => 'Form for creating new CV',
+    'page callback' => 'get_new_cv_form',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM
   );
@@ -19,19 +25,28 @@ function cv_maker_menu() {
   return $items;
 }
 
-function get_homepage($qqq) {
+function get_homepage() {
+  return 'Hello!';
+}
+
+function get_new_cv_form() {
   return drupal_get_form('new_cv_form');
 }
 
 function new_cv_form($form_state) {
   $form = array();
-
-  $form['first_name'] = array(
+  $form['credentials'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Credentials'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+  $form['credentials']['first_name'] = array(
     '#type' => 'textfield',
     '#title' => t('First name'),
     '#default_value' => ''
   );
-  $form['last_name'] = array(
+  $form['credentials']['last_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Last name'),
     '#default_value' => ''
