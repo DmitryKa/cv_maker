@@ -76,9 +76,9 @@ function new_cv_form_submit($form, $form_state) {
     .strtolower($form_state['values']['first_name'])
     .'_'
     .strtolower($form_state['values']['last_name']);
-  $node->first_name[0]['value'] = $form_state['values']['first_name'];
-  $node->last_name[0]['value'] = $form_state['values']['last_name'];
-  $node->content[0]['value'] = $form_state['values']['content'];
+  $node->field_first_name[0]['value'] = $form_state['values']['first_name'];
+  $node->field_last_name[0]['value'] = $form_state['values']['last_name'];
+  $node->field_content[0]['value'] = $form_state['values']['content'];
   $node->type = 'cv';
   $node->created = time();
   $node->changed = $node->created;
