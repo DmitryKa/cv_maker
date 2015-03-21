@@ -1701,6 +1701,9 @@ function menu_rebuild() {
     return FALSE;
   }
 
+  // Encapsulate the rebuild in a transaction.
+  db_query('BEGIN');
+
   $menu = menu_router_build(TRUE);
   _menu_navigation_links_rebuild($menu);
   // Clear the menu, page and block caches.
@@ -1714,6 +1717,9 @@ function menu_rebuild() {
     variable_del('menu_rebuild_needed');
   }
   lock_release('menu_rebuild');
+  
+  db_query('COMMIT');
+  
   return TRUE;
 }
 
@@ -2276,7 +2282,14 @@ function _menu_router_build($callbacks) {
   // First pass: separate callbacks from paths, making paths ready for
   // matching. Calculate fitness, and fill some default values.
   $menu = array();
+  $unique_paths = array();
   foreach ($callbacks as $path => $item) {
+    // If this is a duplicate path (case insensitive) then ignore this
+    // callback item.
+    if (in_array(strtolower($path), $unique_paths)) {
+      continue;
+    }
+    $unique_paths[] = strtolower($path);
     $load_functions = array();
     $to_arg_functions = array();
     $fit = 0;
@@ -2473,8 +2486,16 @@ function _menu_router_build($callbacks) {
  * Returns TRUE if a path is external (e.g. http://example.com).
  */
 function menu_path_is_external($path) {
+  // Avoid calling filter_xss_bad_protocol() if there is any slash (/),
+  // hash (#) or question_mark (?) before the colon (:) occurrence - if any - as
+  // this would clearly mean it is not a URL. If the path starts with 2 slashes
+  // then it is always considered an external URL without an explicit protocol
+  // part.
   $colonpos = strpos($path, ':');
-  return $colonpos !== FALSE && !preg_match('![/?#]!', substr($path, 0, $colonpos)) && filter_xss_bad_protocol($path, FALSE) == check_plain($path);
+  return (strpos($path, '//') === 0)
+    || ($colonpos !== FALSE
+      && !preg_match('![/?#]!', substr($path, 0, $colonpos))
+      && filter_xss_bad_protocol($path, FALSE) == check_plain($path));
 }
 
 /**
