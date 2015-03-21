@@ -26,12 +26,18 @@ function cv_maker_menu() {
 }
 
 function get_homepage() {
-  $my_query = db_query("SELECT * FROM {node} WHERE type='cv'");
-  $rows = array();
-  while($row = db_fetch_object($my_query)) {
-    array_push($rows, $row);
-  }
-  return $rows;
+  $cv_list = views_embed_view('cvs', 'block_1');
+  $link = l('Add', 'http://cv-maker.lo/new-cv');
+  return theme('cv_list', $cv_list, $link);
+}
+
+function cv_maker_theme() {
+  return array(
+    'cv_list' => array(
+      'template' => 'cv-list',
+      'arguments' => array('cv_list' => 'List of CVs is empty', 'link' => NULL)
+    )
+  );
 }
 
 function get_new_cv_form() {
