@@ -33,6 +33,12 @@ function get_homepage() {
 
 function cv_maker_theme() {
   return array(
+    'views_view_fields__cvs__block_1' => array(
+      'arguments' => array('view' => NULL, 'options' => NULL, 'row' => NULL, 'field_alias' => NULL),
+      'original hook' => 'views_view_fields',
+      'template' => 'views-view-fields--cvs--block-1',
+      'preprocess functions' => array('template_preprocess_views_view_fields', 'cv_maker_preprocess_views_view_fields')
+    ),
     'cv_list_homepage' => array(
       'template' => 'cv-list-homepage',
       'arguments' => array('cv_list' => 'List of CVs is empty', 'link' => NULL)
