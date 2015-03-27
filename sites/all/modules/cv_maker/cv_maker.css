@@ -1,4 +1,8 @@
-.my-custom-class {
-    color: red;
-    font-weight: bold;
+.views-row {
+    padding: 1em;
+    line-height: 1.5em;
+    font-size: 1.3em;
+}
+.views-row:not(.views-row-first) {
+    border-top: 3px solid #26a5ff;
 }
