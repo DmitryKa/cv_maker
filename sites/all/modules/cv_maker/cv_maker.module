@@ -85,6 +85,18 @@ function new_cv_form($form_state) {
   return $form;
 }
 
+function new_cv_form_validate($form, &$form_state) {
+  if(strlen($form_state['values']['first_name']) == 0) {
+    form_set_error('first_name', "First name shouldn't be empty");
+  }
+  if(strlen($form_state['values']['last_name']) == 0) {
+    form_set_error('last_name', "Last name shouldn't be empty");
+  }
+  if(strlen($form_state['values']['content']) == 0) {
+    form_set_error('content', "Content shouldn't be empty");
+  }
+}
+
 function new_cv_form_submit($form, $form_state) {
   $node = new stdClass();
 
