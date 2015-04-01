@@ -18,21 +18,15 @@
  * @ingroup views_templates
  */
 ?>
-<?php foreach ($fields as $id => $field): ?>
-  <?php if (!empty($field->separator)): ?>
-    <?php print $field->separator; ?>
-  <?php endif; ?>
+<div>
+  <div class="name-label">Name: </div>
+  <div class="name">
+    <?php print $fields['field_first_name_value']->content . ' ' .
+      $fields['field_last_name_value']->content ?>
+  </div>
+  <div class="content-label">Text:</div>
+  <div class="content">
+    <?php print $fields['field_content_value']->content ?>
+  </div>
 
-  <<?php print $field->inline_html;?> class="views-field-<?php print $field->class; ?>">
-    <?php if ($field->label): ?>
-    <label class="views-label-<?php print $field->class; ?>">
-      <?php print $field->label; ?>:
-    </label>
-  <?php endif; ?>
-  <?php
-  // $field->element_type is either SPAN or DIV depending upon whether or not
-  // the field is a 'block' element type or 'inline' element type.
-  ?>
-  <<?php print $field->element_type; ?> class="field-content"><?php print $field->content; ?></<?php print $field->element_type; ?>>
-  </<?php print $field->inline_html;?>>
-<?php endforeach; ?>
+</div>

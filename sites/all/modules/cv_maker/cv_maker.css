@@ -2,7 +2,15 @@
     padding: 1em;
     line-height: 1.5em;
     font-size: 1.3em;
+
+    border: 2px solid #D5D5D5;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    margin-bottom: 1em;
 }
-.views-row:not(.views-row-first) {
-    border-top: 3px solid #26a5ff;
+.name-label, .content-label {
+    font-weight: bold;
+}
+.name, .content {
+    padding-left: 1em;
+    color: #0C53A5;
 }
