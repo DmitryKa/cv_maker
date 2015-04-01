@@ -19,6 +19,10 @@
  */
 ?>
 <div>
+  <div class="service-links">
+    <span class="service-link"><?php print $fields['view_node']->content ?></span>
+    <span class="service-link"><?php print $fields['edit_node']->content ?></span>
+  </div>
   <div class="name-label">Name: </div>
   <div class="name">
     <?php print $fields['field_first_name_value']->content . ' ' .
@@ -28,5 +32,4 @@
   <div class="content">
     <?php print $fields['field_content_value']->content ?>
   </div>
-
 </div>

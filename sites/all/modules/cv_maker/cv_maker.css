@@ -14,3 +14,9 @@
     padding-left: 1em;
     color: #0C53A5;
 }
+.service-links {
+    font-size: 0.75em;
+}
+.service-link {
+    padding: 0 0.5em;
+}
