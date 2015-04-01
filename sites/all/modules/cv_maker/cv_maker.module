@@ -24,7 +24,7 @@ function cv_maker_menu() {
     'description' => 'Form for creating new CV',
     'page callback' => 'get_new_cv_form',
     'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM
+    'type' => MENU_CALLBACK
   );
 
   return $items;
