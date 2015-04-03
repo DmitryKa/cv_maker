@@ -23,7 +23,7 @@ function cv_maker_menu() {
     'title' => 'New CV',
     'description' => 'Form for creating new CV',
     'page callback' => 'get_new_cv_form',
-    'access arguments' => array('access content'),
+    'access arguments' => array('access new CV addition'),
     'type' => MENU_CALLBACK
   );
 
