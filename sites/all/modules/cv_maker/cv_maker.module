@@ -6,7 +6,7 @@ function cv_maker_init() {
 }
 
 function cv_maker_perm() {
-  return array('access test content');
+  return array('access new CV addition');
 }
 
 function cv_maker_menu() {
@@ -32,9 +32,13 @@ function cv_maker_menu() {
 
 function get_homepage() {
   $cv_list = views_embed_view('cvs', 'block_1');
-  $link = l('Add', 'http://cv-maker.lo/new-cv',
-    array('attributes' => array('class' => 'button-link')));
-  return theme('cv_list_homepage', $cv_list, $link);
+  if(user_access('access new CV addition')) {
+    $link = l('Add', 'http://cv-maker.lo/new-cv',
+      array('attributes' => array('class' => 'button-link')));
+    return theme('cv_list_homepage', $cv_list, $link);
+  } else {
+    return theme('cv_list_homepage', $cv_list);
+  }
 }
 
 function cv_maker_theme() {
