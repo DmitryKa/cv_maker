@@ -105,6 +105,7 @@ function new_cv_form_validate($form, &$form_state) {
 
 function new_cv_form_submit($form, &$form_state) {
   $node = new stdClass();
+  $current_user = user_uid_optional_load();
 
   $node->title = 'cv_'
     .strtolower($form_state['values']['first_name'])
@@ -113,6 +114,7 @@ function new_cv_form_submit($form, &$form_state) {
   $node->field_first_name[0]['value'] = $form_state['values']['first_name'];
   $node->field_last_name[0]['value'] = $form_state['values']['last_name'];
   $node->field_content[0]['value'] = $form_state['values']['content'];
+  $node->field_author_id[0]['value'] = $current_user->uid;
   $node->type = 'cv';
   $node->created = time();
   $node->changed = $node->created;
