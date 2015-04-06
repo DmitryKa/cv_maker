@@ -56,6 +56,12 @@ function cv_maker_theme() {
   );
 }
 
+function cv_maker_preprocess_views_view_fields(&$vars) {
+  $current_content = $vars['fields']['field_content_value']->content;
+  $vars['fields']['field_content_value']->content =
+    strip_tags(htmlspecialchars_decode($current_content));
+}
+
 function get_new_cv_form() {
   return drupal_get_form('new_cv_form');
 }
