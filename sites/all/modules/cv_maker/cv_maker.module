@@ -58,8 +58,17 @@ function cv_maker_theme() {
 
 function cv_maker_preprocess_views_view_fields(&$vars) {
   $current_content = $vars['fields']['field_content_value']->content;
-  $vars['fields']['field_content_value']->content =
-    strip_tags(htmlspecialchars_decode($current_content));
+  $read_more = str_replace('>view<', '>Read more!<',
+    $vars['fields']['view_node']->content);
+  $length = strlen($current_content);
+  $stripped_content = strip_tags(htmlspecialchars_decode($current_content));
+  if($length > 190 &&
+    $current_content[$length-1] == '.' &&
+    $current_content[$length-2] == '.' &&
+    $current_content[$length-3] == '.') {
+    $stripped_content = $stripped_content . ' '. $read_more;
+  }
+  $vars['fields']['field_content_value']->content = $stripped_content;
 }
 
 function get_new_cv_form() {
