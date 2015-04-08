@@ -30,18 +30,19 @@ function cv_maker_menu() {
   return $items;
 }
 
-function cv_maker_menu_alter(&$items) {
-  $items['node/%node/edit']['access callback'] = 'check_edit_permissions';
-}
-
-function check_edit_permissions($word, $number) {
-  $node = node_load(arg(1));
-  $current_user = user_uid_optional_load();
-  if($node->uid == $current_user->uid) {
-    return true;
-  }
-  return node_access($word, $number);
-}
+//function cv_maker_menu_alter(&$items) {
+//  $items['node/%node/edit']['access callback'] = 'check_edit_permissions';
+//  var_dump($items['node/%node']); die;
+//  $items['node/%node']['page callback'] = 'aaa';
+//}
+//function check_edit_permissions($word, $number) {
+//  $node = node_load(arg(1));
+//  $current_user = user_uid_optional_load();
+//  if($node->uid == $current_user->uid) {
+//    return true;
+//  }
+//  return node_access($word, $number);
+//}
 
 function get_homepage() {
   $cv_list = views_embed_view('cvs', 'block_1');
