@@ -8,4 +8,4 @@ regions[content] = Content
 regions[header] = Header
 regions[footer] = Footer
 stylesheets[all][] = custom.css
-base theme = garland
+base theme = bluemarine
